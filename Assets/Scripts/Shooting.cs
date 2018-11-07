@@ -7,10 +7,21 @@ public class Shooting : MonoBehaviour
     public Transform Firepont;
     public GameObject bulletPrefab;
 
+    private float pCd;
+    public float cd;
+
+    private void Start()
+    {
+        pCd = cd;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (pCd > 0)
+        pCd -= Time.deltaTime;
+
+        if (Input.GetButton("Fire1") && pCd <= 0)
         {
             Shoot();
         }
@@ -19,6 +30,7 @@ public class Shooting : MonoBehaviour
     void Shoot ()
     {
         Instantiate(bulletPrefab, Firepont.position,bulletPrefab.transform.rotation);
+        pCd = cd;
     }
 
 

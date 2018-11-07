@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public float dmg;
     public float speed = 20f;
     public Rigidbody2D rb;
 
@@ -14,9 +15,13 @@ public class Bullet : MonoBehaviour
         rb.velocity = transform.up * speed;
     }
 
-    private void OnTriggerEnter2D(Collider2D hitInfo)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log(hitInfo);
-        Destroy(gameObject);
+        
+        if (col.gameObject.tag == "Enemy")
+        {
+            col.SendMessageUpwards("TakeDamage", dmg);
+            Destroy(gameObject);
+        }
     }
 }
